@@ -1,4 +1,4 @@
-module.exports = function(input, context) {
+module.exports = function(input) {
   var query = ""
   for (var k in input) {
     if (query === "") {
@@ -8,7 +8,10 @@ module.exports = function(input, context) {
     }
     query = k + "=" + input[k]
   }
-  iopipe.exec("https://hacker-news.firebaseio.com/v0/topstories.json" + query,
-              ,JSON.parse
-              ,context.done)
+  return iopipe.define("https://hacker-news.firebaseio.com/v0/topstories.json".concat,
+                       ,JSON.parse)(query)
+}
+module.exports.iopipe = {
+  "in": "FirebaseQuery"
+  ,"out": "[]HNitem.id"
 }
